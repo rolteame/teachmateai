@@ -9,7 +9,7 @@ export const usetasksStore = defineStore('tasks', () => {
   const totalNewTasks = ref<number>()
   const totalCompletedTasks = ref<number>()
 
-  const getTaskStats = () => {
+  const getTaskStats = (): void => {
     totalTasksCount.value = taskList.value.length
     totalInProgressTasks.value = taskList.value.filter((task) => task.status === 'In-Progress').length
     totalNewTasks.value = taskList.value.filter((task) => task.status === 'New Tasks').length
@@ -21,10 +21,9 @@ export const usetasksStore = defineStore('tasks', () => {
     getTaskStats()
   }
 
-  const updateTask = (task: Task) => {
+  const updateTask = (task: Task): void => {
     const index = taskList.value.findIndex((t) => t.id === task.id)
     taskList.value[index] = task
-    console.log(taskList.value)
   }
   
   return {

@@ -16,12 +16,14 @@
 		</section>
 		<section class="mt-4 container">
 			<div
-				v-if="filteredTasks.length === 0"
+				v-if="filteredTasks?.length === 0 || filteredTasks === undefined"
 				class="text-center mt-5 text-bold text-muted"
 			>
 				No Tasks Found
 			</div>
-			<TransitionGroup name="list " tag="ul"
+			<TransitionGroup
+				name="list "
+				tag="ul"
 				v-else
 				class="p-2 d-flex flex-wrap gap-3 align-items-center flex-column flex-lg-row"
 			>
@@ -44,7 +46,15 @@
 						<div class="d-flex justify-content-between">
 							<p>Due Date: {{ task.dueDate }}</p>
 							<p>
-								<span class="py-1 px-2 rounded-pill" :class="{ 'bg-primary': task.status === 'New Tasks', 'bg-warning': task.status === 'In-Progress', 'bg-success': task.status === 'Completed'}">{{ task.status }}</span>
+								<span
+									class="py-1 px-2 rounded-pill"
+									:class="{
+										'bg-primary': task.status === 'New Tasks',
+										'bg-warning': task.status === 'In-Progress',
+										'bg-success': task.status === 'Completed',
+									}"
+									>{{ task.status }}</span
+								>
 							</p>
 						</div>
 					</div>
@@ -141,14 +151,15 @@ export default defineComponent({
 	name: "TaskList",
 	props: {
 		tasks: {
-			type: Array as PropType<Task[]>,
+			type: (Array as PropType<Task[]>) || undefined,
+			required: true,
 		},
 	},
 	components: {},
 	setup(props) {
 		const store = usetasksStore();
 		const filter = ref("All Tasks");
-		const filteredTasks = ref<Task[]>([]);
+		const filteredTasks = ref<Task[]>();
 		const formData = ref({
 			id: 0,
 			title: "",
@@ -167,11 +178,11 @@ export default defineComponent({
 			};
 		};
 
-		const updateTask = () => {
+		const updateTask = (): void => {
 			store.updateTask(formData.value);
 		};
 
-		const filterTasks = () => {
+		const filterTasks = (): void => {
 			if (filter.value === "All Tasks") {
 				filteredTasks.value = props.tasks;
 			} else if (filter.value === "New Tasks") {
@@ -226,17 +237,17 @@ li {
 .list-move,
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+	transition: all 0.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
+	opacity: 0;
+	transform: translateX(30px);
 }
 
 .list-leave-active {
-  position: absolute;
+	position: absolute;
 }
 @media screen and (max-width: 768px) {
 	li {
@@ -244,4 +255,3 @@ li {
 	}
 }
 </style>
-
