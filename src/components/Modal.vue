@@ -37,15 +37,6 @@
 								<label for="taskDate" class="form-label">Due Date</label>
 								<input type="date" class="form-control" id="taskDate" v-model="formData.dueDate"/>
 							</div>
-							<!--Task Status-->
-							<div class="mb-3">
-								<label for="taskDate" class="form-label">Status</label>
-								<select class="form-select" aria-label="Task filters" v-model="formData.status">
-									<option>New Tasks</option>
-									<option>In-Progress</option>
-									<option>Completed</option>
-								</select>
-							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -79,7 +70,7 @@ export default defineComponent({
 			title: "",
 			description: "",
 			dueDate: "",
-			status: "",
+			status: "New Tasks",
 		})
 
 		const addTask = () => {
@@ -89,7 +80,7 @@ export default defineComponent({
 				title: "",
 				description: "",
 				dueDate: "",
-				status: "",
+				status: "New Tasks",
 			}
 		}
 
