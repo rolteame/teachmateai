@@ -6,4 +6,5 @@ This application was setup using Vue3, Typescript and Vite
 
 To start the application use the command: npm run dev
 
-## Live view
+## Live Preview
+https://marvelous-queijadas-4832e8.netlify.app/
